@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.react-terminal-wrapper {
+  height: 100vh;
+  border: none;
+  border-radius: 0px;
+}
