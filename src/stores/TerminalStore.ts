@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { RegisterAddress } from "../enums/RegisterAddress";
 
 interface TerminalState {
   Lines: Array<any>;
@@ -15,7 +14,7 @@ const registerStore = (set: any) => ({
   },
 
   clearText: () => {
-    set((state: any) => ({
+    set(() => ({
       Lines: [],
     }));
   },
