@@ -92,7 +92,7 @@ export async function runLC3() {
 
   isRunning = true;
   while (isRunning) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 250));
     let instruction = ReadMemory(GetRegister(RegisterAddress.R_PC));
     SetRegister(RegisterAddress.R_PC, GetRegister(RegisterAddress.R_PC) + 1);
     let opcode = instruction >> 12;

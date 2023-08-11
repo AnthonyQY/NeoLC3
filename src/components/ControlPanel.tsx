@@ -11,6 +11,7 @@ export default function ControlPanel() {
     } catch {
       PrintTerminal("[ERR] Failed to read: " + e.target.files[0]?.name);
     }
+    e.target.value = "";
   };
 
   return (
