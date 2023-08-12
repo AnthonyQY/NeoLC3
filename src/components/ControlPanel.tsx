@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 export default function ControlPanel() {
-  const [delay, setDelay] = useState(100);
+  const [delay, setDelay] = useState(250);
   const handleUploadFile = (e: any) => {
     PrintTerminal("[INF] Loading: " + e.target.files[0]?.name);
     try {
