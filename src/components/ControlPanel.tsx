@@ -60,6 +60,7 @@ export default function ControlPanel() {
             height: "3rem",
           }}
         >
+          <MenuItem value={1}>1</MenuItem>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={100}>100</MenuItem>
           <MenuItem value={250}>250</MenuItem>
