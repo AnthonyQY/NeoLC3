@@ -10,8 +10,7 @@ export default function RegisterPanel() {
         gap: "0.5rem",
 
         padding: "1rem",
-
-        maxWidth: "fit-content",
+        width: "100%",
         border: "1px solid #2F3136",
 
         backgroundColor: "#36393F",

@@ -12,7 +12,7 @@ const PC_START = 0x3000;
 let isRunning: boolean = true;
 let waitingForInput = false;
 
-export async function runLC3() {
+export async function runLC3(delay: number) {
   function getChar() {
     PrintTerminal("[SYS] Awaiting user input...");
     waitingForInput = true;
@@ -92,7 +92,7 @@ export async function runLC3() {
 
   isRunning = true;
   while (isRunning) {
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    await new Promise((resolve) => setTimeout(resolve, delay));
     let instruction = ReadMemory(GetRegister(RegisterAddress.R_PC));
     SetRegister(RegisterAddress.R_PC, GetRegister(RegisterAddress.R_PC) + 1);
     let opcode = instruction >> 12;

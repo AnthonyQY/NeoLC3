@@ -53,7 +53,7 @@ export function PrintTerminal(text: string) {
   });
 }
 
-export function ReadImageFile(imageFile: any) {
+export function ReadImageFile(imageFile: any, delay: number) {
   const reader = new FileReader();
 
   reader.onload = function (event: any) {
@@ -70,7 +70,7 @@ export function ReadImageFile(imageFile: any) {
       pos++;
     }
 
-    runLC3();
+    runLC3(delay);
   };
 
   reader.readAsArrayBuffer(imageFile);
