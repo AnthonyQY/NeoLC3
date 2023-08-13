@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const MEMORY_MAX = 1 << 16;
+export const MEMORY_MAX = 1 << 16;
 
 interface MemoryState {
   Memory: Uint16Array;

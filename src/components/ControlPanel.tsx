@@ -1,19 +1,53 @@
 import { Box, Button, MenuItem, Select } from "@mui/material";
 import RegisterPanel from "./RegisterPanel";
-import { ReadImageFile, PrintTerminal } from "../util/util";
+import {
+  ReadImageFile,
+  PrintTerminal,
+  ClearMemory,
+  ClearRegisters,
+} from "../util/util";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { runLC3, stopLC3 } from "../util/LC3";
 
 export default function ControlPanel() {
   const [delay, setDelay] = useState(250);
+  const [loaded, setLoaded] = useState(false);
+  const [running, setRunning] = useState(false);
+
   const handleUploadFile = (e: any) => {
-    PrintTerminal("[INF] Loading: " + e.target.files[0]?.name);
+    PrintTerminal("[SYS] Loading: " + e.target.files[0]?.name);
     try {
+      setLoaded(false);
       ReadImageFile(e.target.files[0], delay);
+      PrintTerminal(
+        "[SYS] Loaded: " + e.target.files[0]?.name + " into memory."
+      );
+      setLoaded(true);
     } catch {
       PrintTerminal("[ERR] Failed to read: " + e.target.files[0]?.name);
     }
     e.target.value = "";
+  };
+
+  const unloadFile = () => {
+    stopLC3();
+    setTimeout(function () {
+      ClearMemory();
+      ClearRegisters();
+    }, 1000);
+  };
+
+  const handleRunBtn = (e: any) => {
+    PrintTerminal("[SYS] Starting LC3... ");
+    runLC3(delay);
+    setRunning(true);
+  };
+
+  const handleStopBtn = () => {
+    unloadFile();
+    setLoaded(false);
+    setRunning(false);
   };
 
   const handleChange = (e: any) => {
@@ -35,10 +69,42 @@ export default function ControlPanel() {
     >
       <Typography variant="h4">NeoLC3 Control</Typography>
 
-      <Button variant="contained" component="label">
-        Upload Instructions (.obj)
-        <input type="file" hidden onChange={handleUploadFile} />
-      </Button>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "1rem",
+          width: "100%",
+        }}
+      >
+        <Button variant="contained" component="label">
+          Upload (.obj)
+          <input type="file" hidden onChange={handleUploadFile} />
+        </Button>
+
+        {running ? (
+          <Button
+            variant="contained"
+            component="label"
+            color="error"
+            onClick={handleStopBtn}
+            disabled={!loaded}
+          >
+            Stop
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            component="label"
+            color="success"
+            onClick={handleRunBtn}
+            disabled={!loaded}
+          >
+            Run
+          </Button>
+        )}
+      </Box>
+
       <Box
         sx={{
           display: "flex",

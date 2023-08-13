@@ -10,15 +10,20 @@ import { abort } from "process";
 
 const PC_START = 0x3000;
 let isRunning: boolean = true;
-let waitingForInput = false;
+
+export function stopLC3() {
+  isRunning = false;
+}
+
+export function pauseLC3() {}
+
+export function startLC3() {
+  isRunning = true;
+}
 
 export async function runLC3(delay: number) {
   function getChar() {
     PrintTerminal("[SYS] Awaiting user input...");
-    waitingForInput = true;
-    while (waitingForInput) {
-      // Do nothing;
-    }
     var input = prompt("Input: ") || "N";
     PrintTerminal("[USR] Input: " + input);
     if (input.toLowerCase() == "q") {

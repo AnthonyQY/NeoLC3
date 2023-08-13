@@ -1,7 +1,7 @@
 import { useRegisterStore } from "../stores/RegisterStore";
-import { useMemoryStore } from "../stores/MemoryStore";
+import { MEMORY_MAX, useMemoryStore } from "../stores/MemoryStore";
 import { useTerminalStore } from "../stores/TerminalStore";
-import { runLC3 } from "./LC3";
+import { RegisterAddress } from "../enums/RegisterAddress";
 
 export function SignExtend(x: number, bitCount: number): number {
   const m = 1 << (bitCount - 1);
@@ -69,9 +69,17 @@ export function ReadImageFile(imageFile: any, delay: number) {
       WriteMemory(origin + pos, value);
       pos++;
     }
-
-    runLC3(delay);
   };
 
   reader.readAsArrayBuffer(imageFile);
+}
+
+export function ClearMemory() {
+  useMemoryStore.setState({ Memory: new Uint16Array(MEMORY_MAX) });
+}
+
+export function ClearRegisters() {
+  useRegisterStore.setState({
+    Registers: new Uint16Array(RegisterAddress.R_COUNT),
+  });
 }
