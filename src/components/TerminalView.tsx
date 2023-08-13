@@ -21,7 +21,7 @@ export default function TerminalView() {
   };
 
   return (
-    <Box sx={{ flex: "0 0 75%", height: "100vh" }}>
+    <Box sx={{ flex: "0 0 60%", height: "100vh" }}>
       <Terminal
         name="NeoLC3 Console"
         colorMode={ColorMode.Dark}

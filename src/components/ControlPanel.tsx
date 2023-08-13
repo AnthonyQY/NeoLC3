@@ -1,5 +1,5 @@
 import { Box, Button, MenuItem, Select } from "@mui/material";
-import RegisterPanel from "./RegisterPanel";
+
 import {
   ReadImageFile,
   PrintTerminal,
@@ -57,14 +57,15 @@ export default function ControlPanel() {
   return (
     <Box
       sx={{
-        flex: "0 0 25%",
+        flex: "0 0 20%",
         display: "flex",
         flexDirection: "column",
-        gap: "1rem",
+        gap: "1.5rem",
         alignItems: "center",
         backgroundColor: "#36393F",
         color: "#DCDDDE",
         padding: "1rem",
+        height: "100%",
       }}
     >
       <Typography variant="h4">NeoLC3 Control</Typography>
@@ -135,8 +136,6 @@ export default function ControlPanel() {
           <MenuItem value={1000}>1000</MenuItem>
         </Select>
       </Box>
-
-      <RegisterPanel />
     </Box>
   );
 }

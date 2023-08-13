@@ -1,28 +1,22 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import RegisterView from "./RegisterView";
 
 export default function RegisterPanel() {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-
-        padding: "1rem",
-        width: "100%",
-        border: "1px solid #2F3136",
-
-        backgroundColor: "#36393F",
-        color: "#DCDDDE",
+        margin: 0,
+        padding: 0,
+        backgroundColor: "#202225",
+        color: "white",
+        height: "100%",
       }}
     >
-      <Typography variant="h5">Registers</Typography>
       <Box
         sx={{
           display: "grid",
           gridTemplateColumns: "repeat(5, 1fr)",
-          maxWidth: "fit-content",
+          height: "100%",
         }}
       >
         <RegisterView registerAddress={0} registerName={"R_R0"} />

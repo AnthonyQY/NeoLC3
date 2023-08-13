@@ -30,6 +30,7 @@ export default function RegisterView({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
 
         padding: "0.25rem",
 
