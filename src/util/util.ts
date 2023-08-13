@@ -53,7 +53,7 @@ export function PrintTerminal(text: string) {
   });
 }
 
-export function ReadImageFile(imageFile: any, delay: number) {
+export function ReadImageFile(imageFile: any) {
   const reader = new FileReader();
 
   reader.onload = function (event: any) {

@@ -38,7 +38,7 @@ export default function ControlPanel() {
     }, 1000);
   };
 
-  const handleRunBtn = (e: any) => {
+  const handleRunBtn = () => {
     PrintTerminal("[SYS] Starting LC3... ");
     runLC3(delay);
     setRunning(true);
