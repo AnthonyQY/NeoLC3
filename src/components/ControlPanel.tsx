@@ -19,7 +19,7 @@ export default function ControlPanel() {
     PrintTerminal("[SYS] Loading: " + e.target.files[0]?.name);
     try {
       setLoaded(false);
-      ReadImageFile(e.target.files[0], delay);
+      ReadImageFile(e.target.files[0]);
       PrintTerminal(
         "[SYS] Loaded: " + e.target.files[0]?.name + " into memory."
       );
