@@ -15,9 +15,13 @@
 }
 
 .react-terminal-wrapper::after {
-  background-color: #2f3136;
-  top: 0;
-  color: white;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  background-color: #2f3136 !important;
+  top: 0 !important;
+  color: white !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+
+body {
+  overflow: hidden !important;
 }

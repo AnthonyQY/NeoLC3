@@ -1,4 +1,4 @@
-import { Box, LinearProgress, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, Typography } from "@mui/material";
 import MemoryView from "./MemoryView";
 import RegisterPanel from "./RegisterPanel";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ export default function RegisterMemoryPanel() {
     setMemoryCapacity(countNonZeroElements(memory));
   }, [memory]);
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Stack sx={{ height: "100vh" }}>
       <Typography
         sx={{
           margin: 0,
@@ -50,15 +50,13 @@ export default function RegisterMemoryPanel() {
           {"Used: " + memoryCapacity + " / " + MEMORY_MAX}
         </Typography>
       </Typography>
-
       <Box>
         <LinearProgress
           variant="determinate"
           value={normalise(memoryCapacity)}
         />
       </Box>
-
       <MemoryView />
-    </Box>
+    </Stack>
   );
 }
