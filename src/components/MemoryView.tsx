@@ -14,9 +14,7 @@ export default function MemoryView() {
           color: "white",
         }}
       >
-        <Typography variant="body1">
-          {memory.map((x: any) => x !== "0").join(" ")}
-        </Typography>
+        <Typography variant="body1">{memory.join(" ")}</Typography>
       </Box>
     </Box>
   );
