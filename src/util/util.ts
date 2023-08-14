@@ -1,7 +1,9 @@
 import { useRegisterStore } from "../stores/RegisterStore";
 import { MEMORY_MAX, useMemoryStore } from "../stores/MemoryStore";
-import { useTerminalStore } from "../stores/TerminalStore";
+import { useOutputTerminalStore } from "../stores/OutputTerminalStore";
 import { RegisterAddress } from "../enums/RegisterAddress";
+import { useAssemblyTerminalStore } from "../stores/AssemblyTerminalStore";
+import { useSystemTerminalStore } from "../stores/SystemTerminalStore";
 
 export function SignExtend(x: number, bitCount: number): number {
   const m = 1 << (bitCount - 1);
@@ -43,13 +45,24 @@ export function ReadMemorySimple(address: any) {
 }
 
 export function putBuf(data: any[]) {
-  console.log(data.map((e) => String.fromCharCode(e)).join(""));
-  PrintTerminal(data.map((e) => String.fromCharCode(e)).join(""));
+  PrintOutputTerminal(data.map((e) => String.fromCharCode(e)).join(""));
 }
 
-export function PrintTerminal(text: string) {
-  useTerminalStore.setState({
-    Lines: useTerminalStore.getState().Lines.concat(text),
+export function PrintSystemTerminal(text: string) {
+  useSystemTerminalStore.setState({
+    Lines: useSystemTerminalStore.getState().Lines.concat(text),
+  });
+}
+
+export function PrintAssemblyTerminal(text: string) {
+  useAssemblyTerminalStore.setState({
+    Lines: useAssemblyTerminalStore.getState().Lines.concat(text),
+  });
+}
+
+export function PrintOutputTerminal(text: string) {
+  useOutputTerminalStore.setState({
+    Lines: useOutputTerminalStore.getState().Lines.concat(text),
   });
 }
 

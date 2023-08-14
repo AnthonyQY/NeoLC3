@@ -2,9 +2,9 @@ import { Box, Button, MenuItem, Select } from "@mui/material";
 
 import {
   ReadImageFile,
-  PrintTerminal,
   ClearMemory,
   ClearRegisters,
+  PrintSystemTerminal,
 } from "../util/util";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
@@ -16,16 +16,18 @@ export default function ControlPanel() {
   const [running, setRunning] = useState(false);
 
   const handleUploadFile = (e: any) => {
-    PrintTerminal("[SYS] Loading: " + e.target.files[0]?.name);
+    PrintSystemTerminal("[SYS] Loading: " + e.target.files[0]?.name);
     try {
       setLoaded(false);
       ReadImageFile(e.target.files[0]);
-      PrintTerminal(
+      PrintSystemTerminal(
         "[SYS] Loaded: " + e.target.files[0]?.name + " into memory."
       );
       setLoaded(true);
     } catch {
-      PrintTerminal("[ERR] Failed to read: " + e.target.files[0]?.name);
+      PrintSystemTerminal(
+        "[SYS] Error: Failed to read: " + e.target.files[0]?.name
+      );
     }
     e.target.value = "";
   };
@@ -39,9 +41,14 @@ export default function ControlPanel() {
   };
 
   const handleRunBtn = () => {
-    PrintTerminal("[SYS] Starting LC3... ");
-    runLC3(delay);
+    PrintSystemTerminal("[SYS] Starting LC3... ");
+
     setRunning(true);
+    runLC3(delay).then(() => {
+      setLoaded(false);
+      setRunning(false);
+      unloadFile();
+    });
   };
 
   const handleStopBtn = () => {
@@ -65,7 +72,6 @@ export default function ControlPanel() {
         backgroundColor: "#36393F",
         color: "#DCDDDE",
         padding: "1rem",
-        height: "100%",
       }}
     >
       <Typography variant="h4">NeoLC3 Control</Typography>
@@ -82,28 +88,6 @@ export default function ControlPanel() {
           Upload (.obj)
           <input type="file" hidden onChange={handleUploadFile} />
         </Button>
-
-        {running ? (
-          <Button
-            variant="contained"
-            component="label"
-            color="error"
-            onClick={handleStopBtn}
-            disabled={!loaded}
-          >
-            Stop
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            component="label"
-            color="success"
-            onClick={handleRunBtn}
-            disabled={!loaded}
-          >
-            Run
-          </Button>
-        )}
       </Box>
 
       <Box
@@ -136,6 +120,27 @@ export default function ControlPanel() {
           <MenuItem value={1000}>1000</MenuItem>
         </Select>
       </Box>
+      {running ? (
+        <Button
+          variant="contained"
+          component="label"
+          color="error"
+          onClick={handleStopBtn}
+          disabled={!loaded}
+        >
+          Stop
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          component="label"
+          color="success"
+          onClick={handleRunBtn}
+          disabled={!loaded}
+        >
+          Run
+        </Button>
+      )}
     </Box>
   );
 }

@@ -5,7 +5,19 @@
 }
 
 .react-terminal-wrapper {
-  height: 100vh;
-  border: none;
+  height: 100%;
+  border: 1px solid #2f3136;
   border-radius: 0px !important;
+}
+
+.react-terminal-window-buttons {
+  visibility: hidden;
+}
+
+.react-terminal-wrapper::after {
+  background-color: #2f3136;
+  top: 0;
+  color: white;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }

@@ -2,7 +2,14 @@ import { RegisterAddress } from "../enums/RegisterAddress";
 import { ConditionFlag, UpdateFlags } from "../enums/ConditionFlag";
 import { useMemoryStore } from "../stores/MemoryStore";
 import { MMRA } from "../enums/RegisterAddress";
-import { GetRegister, PrintTerminal, SetRegister, WriteMemory } from "./util";
+import {
+  GetRegister,
+  PrintAssemblyTerminal,
+  PrintOutputTerminal,
+  PrintSystemTerminal,
+  SetRegister,
+  WriteMemory,
+} from "./util";
 import { Opcode } from "../enums/OpCode";
 import { SignExtend, putBuf } from "./util";
 import { TrapCode } from "../enums/TrapCode";
@@ -12,20 +19,15 @@ const PC_START = 0x3000;
 let isRunning: boolean = true;
 
 export function stopLC3() {
+  PrintSystemTerminal("[SYS] SYSTEM INTERRUPT");
   isRunning = false;
-}
-
-export function pauseLC3() {}
-
-export function startLC3() {
-  isRunning = true;
 }
 
 export async function runLC3(delay: number) {
   function getChar() {
-    PrintTerminal("[SYS] Awaiting user input...");
+    PrintSystemTerminal("[SYS] Awaiting user input...");
     var input = prompt("Input: ") || "N";
-    PrintTerminal("[USR] Input: " + input);
+    PrintOutputTerminal("[USR] Input: " + input);
     if (input.toLowerCase() == "q") {
       isRunning = false;
     }
@@ -48,13 +50,16 @@ export async function runLC3(delay: number) {
   function handleTrap(instruction: any) {
     switch (instruction & 0xff) {
       case TrapCode.TRAP_GETC:
+        PrintAssemblyTerminal("----- GETC");
         SetRegister(RegisterAddress.R_R0, getChar());
         UpdateFlags(RegisterAddress.R_R0);
         break;
       case TrapCode.TRAP_OUT:
+        PrintAssemblyTerminal("----- OUT ");
         putBuf([GetRegister(RegisterAddress.R_R0)]);
         break;
       case TrapCode.TRAP_PUTS:
+        PrintAssemblyTerminal("----- PUTS");
         let a = GetRegister(RegisterAddress.R_R0);
         let c: any = [];
         while (ReadMemory(a) !== 0) {
@@ -64,10 +69,12 @@ export async function runLC3(delay: number) {
         putBuf(c);
         break;
       case TrapCode.TRAP_IN:
+        PrintAssemblyTerminal("----- IN");
         SetRegister(RegisterAddress.R_R0, getChar());
         UpdateFlags(RegisterAddress.R_R0);
         break;
       case TrapCode.TRAP_PUTSP:
+        PrintAssemblyTerminal("----- PUTSP");
         let addr = GetRegister(RegisterAddress.R_R0);
         let charBuffer: any = [];
         while (ReadMemory(addr) != 0) {
@@ -83,14 +90,15 @@ export async function runLC3(delay: number) {
         putBuf(charBuffer);
         break;
       case TrapCode.TRAP_HALT:
-        PrintTerminal("[SYS] HALT");
+        PrintAssemblyTerminal("----- HALT");
+        PrintSystemTerminal("[SYS] HALT");
         isRunning = false;
         break;
     }
   }
 
   // Entry Point
-  PrintTerminal("[SYS] Running...");
+  PrintSystemTerminal("[SYS] Running...");
 
   SetRegister(RegisterAddress.R_COND, ConditionFlag.FL_ZRO);
   SetRegister(RegisterAddress.R_PC, PC_START);
@@ -106,6 +114,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_BR: {
         let pcOffset = SignExtend(instruction & 0x1ff, 9);
         let condFlag = (instruction >> 9) & 0x7;
+        PrintAssemblyTerminal("[ASM] BR " + pcOffset + " " + condFlag);
         if (condFlag & GetRegister(RegisterAddress.R_COND)) {
           SetRegister(
             RegisterAddress.R_PC,
@@ -118,7 +127,14 @@ export async function runLC3(delay: number) {
         let destinationReg = (instruction >> 9) & 0x7;
         let firstOperandReg = (instruction >> 6) & 0x7;
         let isImmediate = (instruction >> 5) & 0x1;
-
+        PrintAssemblyTerminal(
+          "[ASM] ADD " +
+            destinationReg +
+            " " +
+            firstOperandReg +
+            " " +
+            isImmediate
+        );
         if (isImmediate) {
           let immediateVal = SignExtend(instruction & 0x1f, 5);
           SetRegister(
@@ -139,6 +155,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_LD: {
         let r0 = (instruction >> 9) & 0x7;
         let pc_offset = SignExtend(instruction & 0x1ff, 9);
+        PrintAssemblyTerminal("[ASM] LD " + r0 + " " + pc_offset);
         SetRegister(
           r0,
           ReadMemory(GetRegister(RegisterAddress.R_PC) + pc_offset)
@@ -149,6 +166,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_ST: {
         let r0 = (instruction >> 9) & 0x7;
         let pcOffset = SignExtend(instruction & 0x1ff, 9);
+        PrintAssemblyTerminal("[ASM] ST " + r0 + " " + pcOffset);
         WriteMemory(
           GetRegister(RegisterAddress.R_PC) + pcOffset,
           GetRegister(r0)
@@ -157,6 +175,7 @@ export async function runLC3(delay: number) {
       }
       case Opcode.OP_JSR: {
         let longFlag = (instruction >> 11) & 1;
+        PrintAssemblyTerminal("[ASM] JSR " + longFlag);
         SetRegister(RegisterAddress.R_R7, GetRegister(RegisterAddress.R_PC));
         if (longFlag) {
           let longPCOffset = SignExtend(instruction & 0x7ff, 11);
@@ -174,7 +193,14 @@ export async function runLC3(delay: number) {
         let destinationReg = (instruction >> 9) & 0x7;
         let firstOperandReg = (instruction >> 6) & 0x7;
         let isImmediate = (instruction >> 5) & 0x1;
-
+        PrintAssemblyTerminal(
+          "[ASM] AND " +
+            destinationReg +
+            " " +
+            firstOperandReg +
+            " " +
+            isImmediate
+        );
         if (isImmediate) {
           let immediateVal = SignExtend(instruction & 0x1f, 5);
           SetRegister(
@@ -196,6 +222,7 @@ export async function runLC3(delay: number) {
         let r0 = (instruction >> 9) & 0x7;
         let r1 = (instruction >> 6) & 0x7;
         let offset = SignExtend(instruction & 0x3f, 6);
+        PrintAssemblyTerminal("[ASM] LDR " + r0 + " " + r1 + " " + offset);
         SetRegister(r0, ReadMemory(GetRegister(r1) + offset));
         UpdateFlags(r0);
         break;
@@ -204,16 +231,20 @@ export async function runLC3(delay: number) {
         let r0 = (instruction >> 9) & 0x7;
         let r1 = (instruction >> 6) & 0x7;
         let offset = SignExtend(instruction & 0x3f, 6);
+        PrintAssemblyTerminal("[ASM] STR " + r0 + " " + r1 + " " + offset);
         WriteMemory(GetRegister(r1) + offset, GetRegister(r0));
         break;
       }
       case Opcode.OP_RTI: {
+        PrintAssemblyTerminal("[ASM] RTI");
         break;
       }
       case Opcode.OP_NOT: {
         let destinationReg = (instruction >> 9) & 0x7;
         let firstOperandReg = (instruction >> 6) & 0x7;
-
+        PrintAssemblyTerminal(
+          "[ASM] NOT " + destinationReg + " " + firstOperandReg
+        );
         SetRegister(destinationReg, ~GetRegister(firstOperandReg));
         UpdateFlags(destinationReg);
         break;
@@ -221,6 +252,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_LDI: {
         let destinationReg = (instruction >> 9) & 0x7;
         let pcOffset = SignExtend(instruction & 0x1ff, 9);
+        PrintAssemblyTerminal("[ASM] LDI " + destinationReg + " " + pcOffset);
         SetRegister(
           destinationReg,
           ReadMemory(ReadMemory(GetRegister(RegisterAddress.R_PC) + pcOffset))
@@ -231,6 +263,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_STI: {
         let r0 = (instruction >> 9) & 0x7;
         let pc_offset = SignExtend(instruction & 0x1ff, 9);
+        PrintAssemblyTerminal("[ASM] STI " + r0 + " " + pc_offset);
         WriteMemory(
           ReadMemory(GetRegister(RegisterAddress.R_PC) + pc_offset),
           GetRegister(r0)
@@ -239,24 +272,29 @@ export async function runLC3(delay: number) {
       }
       case Opcode.OP_JMP: {
         let r1 = (instruction >> 6) & 0x7;
+        PrintAssemblyTerminal("[ASM] JMP " + r1);
         SetRegister(RegisterAddress.R_PC, GetRegister(r1));
         break;
       }
       case Opcode.OP_RES: {
+        PrintAssemblyTerminal("[ASM] RES");
         break;
       }
       case Opcode.OP_LEA: {
         let r0 = (instruction >> 9) & 0x7;
         let pc_offset = SignExtend(instruction & 0x1ff, 9);
+        PrintAssemblyTerminal("[ASM] LEA " + r0 + " " + pc_offset);
         SetRegister(r0, GetRegister(RegisterAddress.R_PC) + pc_offset);
         UpdateFlags(r0);
         break;
       }
       case Opcode.OP_TRAP: {
+        PrintAssemblyTerminal("[ASM] TRAP " + instruction);
         handleTrap(instruction);
         break;
       }
       default:
+        PrintAssemblyTerminal("[ASM] Error: Invalid opcode. Aborting.");
         abort();
         break;
     }

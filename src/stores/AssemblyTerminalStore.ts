@@ -4,7 +4,7 @@ interface TerminalState {
   Lines: Array<any>;
 }
 
-const registerStore = (set: any) => ({
+const assemblyTerminalStore = (set: any) => ({
   Lines: new Array<String>(),
 
   addText: (value: any) => {
@@ -20,4 +20,6 @@ const registerStore = (set: any) => ({
   },
 });
 
-export const useTerminalStore = create<TerminalState>(registerStore);
+export const useAssemblyTerminalStore = create<TerminalState>(
+  assemblyTerminalStore
+);

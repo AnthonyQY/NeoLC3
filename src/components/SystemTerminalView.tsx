@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
-import { useTerminalStore } from "../stores/TerminalStore";
+import { useSystemTerminalStore } from "../stores/SystemTerminalStore";
 import Ansi from "ansi-to-react";
 
 export default function TerminalView() {
-  const terminalState = useTerminalStore((state: any) => state.Lines);
-  const printTerminal = useTerminalStore((state: any) => state.addText);
-  const clearTerminal = useTerminalStore((state: any) => state.clearText);
+  const terminalState = useSystemTerminalStore((state: any) => state.Lines);
+  const printTerminal = useSystemTerminalStore((state: any) => state.addText);
+  const clearTerminal = useSystemTerminalStore((state: any) => state.clearText);
 
   const handleTerminalInput = (input: string) => {
     switch (input.toLowerCase()) {
@@ -21,11 +21,12 @@ export default function TerminalView() {
   };
 
   return (
-    <Box sx={{ flex: "0 0 60%", height: "100vh" }}>
+    <Box sx={{ height: "100%" }}>
       <Terminal
-        name="NeoLC3 Console"
+        name="System Logs"
         colorMode={ColorMode.Dark}
         onInput={(terminalInput) => handleTerminalInput(terminalInput)}
+        height="inherit"
       >
         {terminalState.map((x: any) => {
           return (

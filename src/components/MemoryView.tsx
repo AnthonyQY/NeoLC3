@@ -4,7 +4,7 @@ import { useMemoryStore } from "../stores/MemoryStore";
 export default function MemoryView() {
   const memory = useMemoryStore((state: any) => state.Memory);
   return (
-    <Box sx={{ height: "75%", flex: "0 0 20%" }}>
+    <Box sx={{ height: "70%", flex: "0 0 20%" }}>
       <Box
         sx={{
           overflowY: "auto",
@@ -14,7 +14,9 @@ export default function MemoryView() {
           color: "white",
         }}
       >
-        <Typography variant="body1">{memory.join(" ")}</Typography>
+        <Typography variant="body1">
+          {memory.map((x: any) => x !== "0").join(" ")}
+        </Typography>
       </Box>
     </Box>
   );
