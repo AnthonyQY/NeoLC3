@@ -27,6 +27,7 @@ export async function runLC3(delay: number) {
   function getChar() {
     PrintSystemTerminal("[SYS] Awaiting user input...");
     var input = prompt("Input: ") || "N";
+    PrintSystemTerminal("[SYS] User input received. Continuing...");
     PrintOutputTerminal("[USR] Input: " + input);
     if (input.toLowerCase() == "q") {
       isRunning = false;

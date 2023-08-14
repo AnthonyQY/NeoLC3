@@ -23,7 +23,7 @@ export default function TerminalView() {
   return (
     <Box sx={{ height: "100%" }}>
       <Terminal
-        name="System Logs"
+        name="System Log"
         colorMode={ColorMode.Dark}
         onInput={(terminalInput) => handleTerminalInput(terminalInput)}
         height="inherit"
