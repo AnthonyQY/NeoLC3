@@ -5,7 +5,9 @@ export default function MemoryView() {
   const memory = useMemoryStore((state: any) => state.Memory);
   return (
     <Box>
-      <Typography variant="body1">{memory.join(" ")}</Typography>
+      <Typography variant="body1" fontFamily={"IBM Plex Mono"}>
+        {memory.join(" ")}
+      </Typography>
     </Box>
   );
 }

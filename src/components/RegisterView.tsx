@@ -39,8 +39,12 @@ export default function RegisterView({
         color: "#DCDDDE",
       }}
     >
-      <Typography variant="body1">{registers[registerAddress]}</Typography>
-      <Typography variant="subtitle1">{registerName}</Typography>
+      <Typography variant="body1" fontFamily={"IBM Plex Mono"}>
+        {registers[registerAddress]}
+      </Typography>
+      <Typography variant="subtitle1" fontFamily={"IBM Plex Mono"}>
+        {registerName}
+      </Typography>
     </Box>
   );
 }
