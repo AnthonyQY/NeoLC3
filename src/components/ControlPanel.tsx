@@ -109,20 +109,23 @@ export default function ControlPanel() {
           width: "100%",
         }}
       >
-        <Button
-          component="label"
-          sx={{
-            width: "100%",
-            padding: "1rem",
-            backgroundColor: "#27AE60",
-            color: "white",
-            ":hover": { backgroundColor: "#219653" },
-          }}
-          startIcon={<UploadIcon />}
-        >
-          <input type="file" hidden onChange={handleUploadFile} />
-          Upload (.obj)
-        </Button>
+        <Box sx={{ width: "100%" }}>
+          <Button
+            component="label"
+            sx={{
+              width: "100%",
+              padding: "1rem",
+              backgroundColor: "#27AE60",
+              color: "white",
+              ":hover": { backgroundColor: "#219653" },
+            }}
+            startIcon={<UploadIcon />}
+          >
+            Upload (.obj)
+            <input type="file" hidden onChange={handleUploadFile} />
+          </Button>
+        </Box>
+
         <Button
           variant="contained"
           href="../hworld.obj"
