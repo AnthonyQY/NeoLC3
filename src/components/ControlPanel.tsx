@@ -125,7 +125,7 @@ export default function ControlPanel() {
         </Button>
         <Button
           variant="contained"
-          href="../assets/hworld.obj"
+          href="../hworld.obj"
           sx={{
             minWidth: "8rem",
             backgroundColor: "#3498DB",
