@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, Select } from "@mui/material";
+import { Box, Button, LinearProgress, MenuItem, Select } from "@mui/material";
 
 import {
   ReadImageFile,
@@ -161,6 +161,7 @@ export default function ControlPanel() {
             width: "100%",
             height: "3rem",
           }}
+          disabled={running}
         >
           <MenuItem value={0}>0</MenuItem>
           <MenuItem value={1}>1</MenuItem>
@@ -204,6 +205,21 @@ export default function ControlPanel() {
           Run
         </Button>
       )}
+      <Box sx={{ width: "100%" }}>
+        {running ? (
+          <LinearProgress
+            variant="indeterminate"
+            sx={{ height: "10px", backgroundColor: "#2f3136" }}
+          />
+        ) : (
+          <LinearProgress
+            variant="determinate"
+            color="success"
+            sx={{ height: "10px", backgroundColor: "#2f3136" }}
+            value={0}
+          />
+        )}
+      </Box>
     </Box>
   );
 }
