@@ -8,16 +8,15 @@ import AssemblyTerminalView from "./components/AssemblyTerminalView";
 function App() {
   const isMobile = useMediaQuery("(max-width:800px)");
   return isMobile ? (
-    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <Stack sx={{ flex: "0 0 25%" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "200vh" }}>
+      <Stack height={"100%"} sx={{ overflow: "hidden" }}>
         <ControlPanel />
         <SystemTerminalView />
-      </Stack>
-      <Stack sx={{ flex: "0 0 55%" }}>
         <TerminalView />
         <AssemblyTerminalView />
+
+        <RegisterMemoryPanel />
       </Stack>
-      <RegisterMemoryPanel />
     </Box>
   ) : (
     <Box sx={{ display: "flex", flexDirection: "row", height: "100vh" }}>
