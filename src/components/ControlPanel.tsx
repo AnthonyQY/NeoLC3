@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { runLC3, stopLC3 } from "../util/LC3";
 
+import "../fonts/fonts.css";
+
 export default function ControlPanel() {
   const [delay, setDelay] = useState(250);
   const [loaded, setLoaded] = useState(false);
@@ -74,7 +76,18 @@ export default function ControlPanel() {
         padding: "1rem",
       }}
     >
-      <Typography variant="h4">NeoLC3 Control</Typography>
+      <Box sx={{ display: "flex" }}>
+        <Typography
+          sx={{ fontFamily: "LEMONMILK" }}
+          variant="h4"
+          color={"#55C39E"}
+        >
+          NEO
+        </Typography>
+        <Typography sx={{ fontFamily: "LEMONMILK" }} variant="h4">
+          LC3
+        </Typography>
+      </Box>
 
       <Box
         sx={{

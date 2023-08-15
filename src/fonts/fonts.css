@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter&display=swap");
+
+@font-face {
+  font-family: "LEMONMILK";
+  src: local("LEMONMILK"), url(./LEMONMILK-Regular.otf) format("opentype");
+}

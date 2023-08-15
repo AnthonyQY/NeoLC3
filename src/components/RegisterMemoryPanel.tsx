@@ -35,7 +35,18 @@ export default function RegisterMemoryPanel() {
       >
         Registers
       </Typography>
-      <RegisterPanel />
+      <Box
+        sx={{
+          margin: 0,
+          padding: 0,
+          backgroundColor: "#202225",
+          color: "white",
+          height: "auto",
+        }}
+      >
+        <RegisterPanel />
+      </Box>
+
       <Typography
         sx={{
           margin: 0,
@@ -56,7 +67,17 @@ export default function RegisterMemoryPanel() {
           value={normalise(memoryCapacity)}
         />
       </Box>
-      <MemoryView />
+      <Box
+        sx={{
+          overflowY: "auto",
+          height: "100%",
+          backgroundColor: "#202225",
+          padding: "0.5rem",
+          color: "white",
+        }}
+      >
+        <MemoryView />
+      </Box>
     </Stack>
   );
 }
