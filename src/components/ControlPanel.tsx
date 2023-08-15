@@ -10,6 +10,11 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { runLC3, stopLC3 } from "../util/LC3";
 
+import DownloadIcon from "@mui/icons-material/Download";
+import UploadIcon from "@mui/icons-material/Upload";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import StopIcon from "@mui/icons-material/Stop";
+
 import "../fonts/fonts.css";
 
 export default function ControlPanel() {
@@ -35,6 +40,11 @@ export default function ControlPanel() {
   };
 
   const unloadFile = () => {
+    ClearMemory();
+    ClearRegisters();
+  };
+
+  const unloadFileInterrupt = () => {
     stopLC3();
     setTimeout(function () {
       ClearMemory();
@@ -47,14 +57,16 @@ export default function ControlPanel() {
 
     setRunning(true);
     runLC3(delay).then(() => {
-      setLoaded(false);
+      if (loaded) {
+        unloadFile();
+        setLoaded(false);
+      }
       setRunning(false);
-      unloadFile();
     });
   };
 
   const handleStopBtn = () => {
-    unloadFile();
+    unloadFileInterrupt();
     setLoaded(false);
     setRunning(false);
   };
@@ -97,9 +109,33 @@ export default function ControlPanel() {
           width: "100%",
         }}
       >
-        <Button variant="contained" component="label" sx={{ width: "100%" }}>
-          Upload (.obj)
+        <Button
+          component="label"
+          sx={{
+            width: "100%",
+            padding: "1rem",
+            backgroundColor: "#27AE60",
+            color: "white",
+            ":hover": { backgroundColor: "#219653" },
+          }}
+          startIcon={<UploadIcon />}
+        >
           <input type="file" hidden onChange={handleUploadFile} />
+          Upload (.obj)
+        </Button>
+        <Button
+          variant="contained"
+          href="../assets/hworld.obj"
+          sx={{
+            minWidth: "8rem",
+            backgroundColor: "#3498DB",
+            ":hover": {
+              backgroundColor: "#2980B9",
+            },
+          }}
+          startIcon={<DownloadIcon />}
+        >
+          Example
         </Button>
       </Box>
 
@@ -136,10 +172,15 @@ export default function ControlPanel() {
         <Button
           variant="contained"
           component="label"
-          color="error"
           onClick={handleStopBtn}
           disabled={!loaded}
-          sx={{ width: "100%" }}
+          sx={{
+            width: "100%",
+            backgroundColor: "#E74C3C",
+            ":hover": { backgroundColor: "#C0392B" },
+            height: "4rem",
+          }}
+          startIcon={<StopIcon />}
         >
           Stop
         </Button>
@@ -147,10 +188,15 @@ export default function ControlPanel() {
         <Button
           variant="contained"
           component="label"
-          color="success"
           onClick={handleRunBtn}
           disabled={!loaded}
-          sx={{ width: "100%" }}
+          sx={{
+            width: "100%",
+            backgroundColor: "#2ECC71",
+            ":hover": { backgroundColor: "#27AE60" },
+            height: "4rem",
+          }}
+          startIcon={<PlayArrowIcon />}
         >
           Run
         </Button>
