@@ -84,7 +84,7 @@ export default function ControlPanel() {
           width: "100%",
         }}
       >
-        <Button variant="contained" component="label">
+        <Button variant="contained" component="label" sx={{ width: "100%" }}>
           Upload (.obj)
           <input type="file" hidden onChange={handleUploadFile} />
         </Button>
@@ -106,8 +106,7 @@ export default function ControlPanel() {
           sx={{
             border: "1px solid #2F3136",
             color: "white",
-            minWidth: "5rem",
-            maxWidth: "50%",
+            width: "100%",
             height: "3rem",
           }}
         >
@@ -127,6 +126,7 @@ export default function ControlPanel() {
           color="error"
           onClick={handleStopBtn}
           disabled={!loaded}
+          sx={{ width: "100%" }}
         >
           Stop
         </Button>
@@ -137,6 +137,7 @@ export default function ControlPanel() {
           color="success"
           onClick={handleRunBtn}
           disabled={!loaded}
+          sx={{ width: "100%" }}
         >
           Run
         </Button>

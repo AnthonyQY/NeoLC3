@@ -70,7 +70,7 @@ export async function runLC3(delay: number) {
         putBuf(c);
         break;
       case TrapCode.TRAP_IN:
-        PrintAssemblyTerminal("----- IN");
+        PrintAssemblyTerminal("----- IN  ");
         SetRegister(RegisterAddress.R_R0, getChar());
         UpdateFlags(RegisterAddress.R_R0);
         break;
@@ -115,7 +115,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_BR: {
         let pcOffset = SignExtend(instruction & 0x1ff, 9);
         let condFlag = (instruction >> 9) & 0x7;
-        PrintAssemblyTerminal("[ASM] BR " + pcOffset + " " + condFlag);
+        PrintAssemblyTerminal("[ASM] BR  " + pcOffset + " " + condFlag);
         if (condFlag & GetRegister(RegisterAddress.R_COND)) {
           SetRegister(
             RegisterAddress.R_PC,
@@ -156,7 +156,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_LD: {
         let r0 = (instruction >> 9) & 0x7;
         let pc_offset = SignExtend(instruction & 0x1ff, 9);
-        PrintAssemblyTerminal("[ASM] LD " + r0 + " " + pc_offset);
+        PrintAssemblyTerminal("[ASM] LD  " + r0 + " " + pc_offset);
         SetRegister(
           r0,
           ReadMemory(GetRegister(RegisterAddress.R_PC) + pc_offset)
@@ -167,7 +167,7 @@ export async function runLC3(delay: number) {
       case Opcode.OP_ST: {
         let r0 = (instruction >> 9) & 0x7;
         let pcOffset = SignExtend(instruction & 0x1ff, 9);
-        PrintAssemblyTerminal("[ASM] ST " + r0 + " " + pcOffset);
+        PrintAssemblyTerminal("[ASM] ST  " + r0 + " " + pcOffset);
         WriteMemory(
           GetRegister(RegisterAddress.R_PC) + pcOffset,
           GetRegister(r0)
@@ -237,7 +237,7 @@ export async function runLC3(delay: number) {
         break;
       }
       case Opcode.OP_RTI: {
-        PrintAssemblyTerminal("[ASM] RTI");
+        PrintAssemblyTerminal("[ASM] RTI ");
         break;
       }
       case Opcode.OP_NOT: {
@@ -278,7 +278,7 @@ export async function runLC3(delay: number) {
         break;
       }
       case Opcode.OP_RES: {
-        PrintAssemblyTerminal("[ASM] RES");
+        PrintAssemblyTerminal("[ASM] RES ");
         break;
       }
       case Opcode.OP_LEA: {
