@@ -85,7 +85,6 @@ export default function ControlPanel() {
         backgroundColor: "#36393F",
         color: "#DCDDDE",
         padding: "1rem",
-        height: "40%",
       }}
     >
       <Box sx={{ display: "flex" }}>
