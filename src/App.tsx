@@ -6,10 +6,10 @@ import SystemTerminalView from "./components/SystemTerminalView";
 import AssemblyTerminalView from "./components/AssemblyTerminalView";
 
 function App() {
-  const isMobile = useMediaQuery("(max-width:800px)");
+  const isMobile = useMediaQuery("(max-width:900px)");
   return isMobile ? (
     <Box sx={{ display: "flex", flexDirection: "column", height: "200vh" }}>
-      <Stack height={"100%"} sx={{ overflow: "hidden" }}>
+      <Stack sx={{ overflow: "hidden" }}>
         <ControlPanel />
         <SystemTerminalView />
         <TerminalView />
@@ -19,7 +19,7 @@ function App() {
     </Box>
   ) : (
     <Box sx={{ display: "flex", flexDirection: "row", height: "100vh" }}>
-      <Stack sx={{ flex: "0 0 25%" }}>
+      <Stack sx={{ flex: "0 0 25%", height: "100%" }}>
         <ControlPanel />
         <SystemTerminalView />
       </Stack>

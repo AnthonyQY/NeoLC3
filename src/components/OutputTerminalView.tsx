@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useOutputTerminalStore } from "../stores/OutputTerminalStore";
 import Ansi from "ansi-to-react";
@@ -7,7 +7,7 @@ export default function TerminalView() {
   const terminalState = useOutputTerminalStore((state: any) => state.Lines);
   const printTerminal = useOutputTerminalStore((state: any) => state.addText);
   const clearTerminal = useOutputTerminalStore((state: any) => state.clearText);
-
+  const isMobile = useMediaQuery("(max-width:900px)");
   const handleTerminalInput = (input: string) => {
     switch (input.toLowerCase()) {
       case "clear": {
@@ -26,7 +26,7 @@ export default function TerminalView() {
         name="NeoLC3 Console"
         colorMode={ColorMode.Dark}
         onInput={(terminalInput) => handleTerminalInput(terminalInput)}
-        height="inherit"
+        height={isMobile ? "8rem" : "inherit"}
       >
         {terminalState.map((x: any) => {
           return (

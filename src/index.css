@@ -22,3 +22,9 @@
   padding-top: 0.25rem !important;
   padding-bottom: 0.25rem !important;
 }
+
+@media screen and (max-width: 800px) {
+  .react-terminal-wrapper {
+    height: 15rem;
+  }
+}

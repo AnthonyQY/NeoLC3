@@ -78,7 +78,6 @@ export default function ControlPanel() {
   return (
     <Box
       sx={{
-        flex: "0 0 20%",
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
@@ -86,6 +85,7 @@ export default function ControlPanel() {
         backgroundColor: "#36393F",
         color: "#DCDDDE",
         padding: "1rem",
+        height: "40%",
       }}
     >
       <Box sx={{ display: "flex" }}>
