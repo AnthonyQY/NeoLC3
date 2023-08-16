@@ -19,7 +19,7 @@ function App() {
     </Box>
   ) : (
     <Box sx={{ display: "flex", flexDirection: "row", height: "100vh" }}>
-      <Stack sx={{ flex: "0 0 25%", height: "100%" }}>
+      <Stack sx={{ flex: "0 0 25%" }}>
         <ControlPanel />
         <SystemTerminalView />
       </Stack>

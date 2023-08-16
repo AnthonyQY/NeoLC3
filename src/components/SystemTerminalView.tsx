@@ -21,7 +21,7 @@ export default function TerminalView() {
   };
 
   return (
-    <Box sx={{ height: "60%" }}>
+    <Box sx={{ height: "100%" }} className={"SystemLog"}>
       <Terminal
         name="System Log"
         colorMode={ColorMode.Dark}

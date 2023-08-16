@@ -28,3 +28,9 @@
     height: 15rem;
   }
 }
+
+.SystemLog {
+  flex: 1 1 auto;
+  height: auto;
+  overflow: hidden;
+}
